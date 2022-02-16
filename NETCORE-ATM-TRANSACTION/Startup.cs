@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NETCORE_ATM_TRANSACTION.IService;
+using NETCORE_ATM_TRANSACTION.Mapper;
+using NETCORE_ATM_TRANSACTION.Models;
 using NETCORE_ATM_TRANSACTION.Repository.Models;
 using NETCORE_ATM_TRANSACTION.Services;
 using System;
@@ -31,7 +34,21 @@ namespace NETCORE_ATM_TRANSACTION
         {
 
             services.AddControllers();
-            services.AddScoped<IGenericServiceTransfer<Customer>, MoneyTransferService>();
+            services.AddDbContext<AtmDbContext>(
+        options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+            services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+            services.AddScoped<IGenericServiceTransfer<Account>, MoneyTransferService>();
+            services.AddScoped<IGenericServiceDepositWithdraw<Account>, DepositWithDrawService>();
+            services.AddScoped<IAccountCRUDService, AccountCRUDService > ();
+            services.AddScoped<ICustomerCRUDService, CustomerCRUDService > ();
+           
+
+
+            services.AddAutoMapper(typeof(Mappings));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NETCORE_ATM_TRANSACTION", Version = "v1" });
