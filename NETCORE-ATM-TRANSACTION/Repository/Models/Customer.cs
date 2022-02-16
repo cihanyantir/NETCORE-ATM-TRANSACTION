@@ -10,8 +10,8 @@ namespace NETCORE_ATM_TRANSACTION.Repository.Models
     {
         [Key]
         public int CustomerID { get; set; }
-        public double Balance { get; set; }
         public int BankID { get; set; }
         public virtual List<Account> Accounts { get; set; }
+        public DateTime MembershipDate { get; set; }
     }
 }

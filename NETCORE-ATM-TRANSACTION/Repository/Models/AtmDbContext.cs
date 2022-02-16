@@ -10,6 +10,10 @@ namespace NETCORE_ATM_TRANSACTION.Models
 {
     public class AtmDbContext :DbContext
     {
+        public AtmDbContext(DbContextOptions<AtmDbContext> options)
+        : base(options) //buynu değiştim to ctor
+        {
+        }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Transaction> Transactionss { get; set; }
         public DbSet<Account> Accounts { get; set; }
