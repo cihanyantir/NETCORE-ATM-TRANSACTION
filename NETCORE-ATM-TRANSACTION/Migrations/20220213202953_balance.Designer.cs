@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NETCORE_ATM_TRANSACTION.Models;
 
 namespace NETCORE_ATM_TRANSACTION.Migrations
 {
     [DbContext(typeof(AtmDbContext))]
-    partial class AtmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220213202953_balance")]
+    partial class balance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,11 +34,8 @@ namespace NETCORE_ATM_TRANSACTION.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerID")
+                    b.Property<int?>("CustomerID")
                         .HasColumnType("int");
-
-                    b.Property<string>("IBAN")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AccountID");
 
@@ -54,9 +53,6 @@ namespace NETCORE_ATM_TRANSACTION.Migrations
 
                     b.Property<int>("BankID")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("MembershipDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("CustomerID");
 
@@ -92,9 +88,7 @@ namespace NETCORE_ATM_TRANSACTION.Migrations
                 {
                     b.HasOne("NETCORE_ATM_TRANSACTION.Repository.Models.Customer", "Customer")
                         .WithMany("Accounts")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerID");
 
                     b.Navigation("Customer");
                 });

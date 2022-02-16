@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NETCORE_ATM_TRANSACTION.Models;
 
 namespace NETCORE_ATM_TRANSACTION.Migrations
 {
     [DbContext(typeof(AtmDbContext))]
-    partial class AtmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220215194904_migforeign")]
+    partial class migforeign
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,9 +56,6 @@ namespace NETCORE_ATM_TRANSACTION.Migrations
 
                     b.Property<int>("BankID")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("MembershipDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("CustomerID");
 
