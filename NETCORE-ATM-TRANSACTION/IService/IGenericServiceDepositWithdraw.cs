@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace NETCORE_ATM_TRANSACTION.IService
 {
-    public interface IGenericServiceTransfer<T>
+   public interface IGenericServiceDepositWithdraw<T>
     {
-        T Transaction(int OriginAccountID, int TargetAccountID, double amount);
-        bool EftHavaleCheck(int OriginAccountID, int TargetAccountID);
+        T WithDrawProcess(int OriginAccountID, double amount);
+        T DepositProcess(int OriginAccountID, double amount);
         bool EnoughBalance(int OriginAccountID, double amount);
     }
 }
